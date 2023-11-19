@@ -13,11 +13,20 @@ class Survey(models.Model):
   status = models.CharField(max_length=6, choices=STATUS, default=STATUS[0][0])
   submissions = models.IntegerField(default=0)
 
+  def __str__(self):
+    return self.title
+
 class Question(models.Model):
   survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
   question = models.CharField(max_length=250)
+
+  def __str__(self):
+      return self.question
 
 class Option(models.Model):
   question = models.ForeignKey(Question, on_delete=models.CASCADE)
   option = models.CharField(max_length=250)
   selected = models.IntegerField(default=0)
+
+  def __str__(self):
+    return self.option
