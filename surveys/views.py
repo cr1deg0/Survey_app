@@ -12,3 +12,4 @@ class Home(TemplateView):
 
 class SurveyListView(ListView):
   model = Survey
+  context_object_name = 'surveys'
