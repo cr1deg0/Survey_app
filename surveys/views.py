@@ -1,5 +1,6 @@
 from django.views.generic.base import TemplateView
-from django.contrib.auth.decorators import login_required
+from django.views.generic import ListView
+from surveys.models import Survey
 # from django.views import Views
 
 # Create your views here.
@@ -9,5 +10,5 @@ class Home(TemplateView):
   template_name = 'home.html'
 
 
-class My_Surveys(TemplateView):
-  template_name = 'my_surveys.html'
+class SurveyListView(ListView):
+  model = Survey
