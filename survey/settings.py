@@ -123,5 +123,5 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = 'my_surveys'
+LOGIN_REDIRECT_URL = 'survey_list'
 LOGOUT_REDIRECT_URL = 'home'

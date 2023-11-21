@@ -13,8 +13,8 @@ class QuestionInLine(admin.StackedInline):
   extra = 0
 
 class SurveyAdmin(admin.ModelAdmin):
-  """ Display survey title and creation date in admin surveys summary. Display survey and
-  Questions together """
+  """ Display survey title and creation date in admin surveys summary. Display Survey and Questions 
+  and together """
   inlines = [QuestionInLine]
   list_display = ['title', 'creation_date']
 
