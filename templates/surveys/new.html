@@ -1,0 +1,12 @@
+{% extends './base_authenticated.html' %}
+
+{% block content %}
+<main class="container">
+  <form method="POST">
+    {% csrf_token %}
+    <label for="id_title" class="form-label">Survey Title:</label>
+    <input type="text" name="title" maxlength="250" required="" id="id_title" class="form-control">
+    <button type="submit" class="btn btn-primary btn-md px-4 me-sm-3 mt-4">Create</button>
+  </form>
+</main>
+{% endblock %}

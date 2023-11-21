@@ -1,6 +1,6 @@
 from urllib import request
 from django.views.generic.base import TemplateView
-from django.views.generic import ListView, DetailView, UpdateView
+from django.views.generic import ListView, DetailView, UpdateView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from surveys.models import Survey
 
@@ -23,3 +23,11 @@ class SurveyEdit(LoginRequiredMixin, UpdateView):
   model = Survey
   template_name= 'surveys/edit.html'
 
+class SurveyNew(LoginRequiredMixin, CreateView):
+  model = Survey
+  fields = ['title']
+  template_name = 'surveys/new.html'
+
+  def form_valid(self, form):
+    form.instance.creator = self.request.user
+    return super().form_valid(form)

@@ -18,7 +18,7 @@ class Survey(models.Model):
   def __str__(self):
     return self.title
 
-  def absolute_url(self):
+  def get_absolute_url(self):
     return reverse('survey_list')
 
 class Question(models.Model):

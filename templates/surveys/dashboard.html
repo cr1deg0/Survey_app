@@ -34,6 +34,8 @@
   {% else %} 
     <p>You don't have any Survey</p>
   {% endif %}
-  <span class="container d-flex justify-content-center"><a class="btn btn-primary btn-md px-4 me-sm-3">New Survey</a> </span>
+  <span class="container d-flex justify-content-center">
+    <a href="{% url 'survey_new' %}" class="btn btn-primary btn-md px-4 me-sm-3">New Survey</a> 
+  </span>
 </main>
 {% endblock %}
