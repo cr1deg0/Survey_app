@@ -5,7 +5,7 @@
 <main class="container vh-100 ">
   <h1>Your surveys</h1>
   {% if surveys %}
-    <table class="table">
+    <table class="table mb-4">
       <thead>
         <tr>
           <th scope="col">Survey</th>
@@ -34,6 +34,6 @@
   {% else %} 
     <p>You don't have any Survey</p>
   {% endif %}
-  <a>New Survey</a> 
+  <span class="container d-flex justify-content-center"><a class="btn btn-primary btn-md px-4 me-sm-3">New Survey</a> </span>
 </main>
 {% endblock %}
