@@ -14,6 +14,7 @@ class Home(TemplateView):
 class SurveyListView(LoginRequiredMixin, ListView):
   model = Survey
   context_object_name = 'surveys'
+  template_name = 'surveys/dashboard.html'
 
   def get_queryset(self):
       return super().get_queryset().filter(creator=self.request.user)
