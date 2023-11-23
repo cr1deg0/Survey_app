@@ -1,9 +1,6 @@
-from urllib import request
-from django.views.generic.base import TemplateView
-from django.views.generic import ListView, DetailView, UpdateView, CreateView
+from django.views.generic import ListView, DetailView, UpdateView, CreateView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from surveys.models import Survey
-
 
 # Create your views here.
 
@@ -17,7 +14,7 @@ class SurveyListView(LoginRequiredMixin, ListView):
   template_name = 'surveys/dashboard.html'
 
   def get_queryset(self):
-      return super().get_queryset().filter(creator=self.request.user)
+    return super().get_queryset().filter(creator=self.request.user)
 
 class SurveyEdit(LoginRequiredMixin, UpdateView):
   model = Survey
@@ -31,3 +28,12 @@ class SurveyNew(LoginRequiredMixin, CreateView):
   def form_valid(self, form):
     form.instance.creator = self.request.user
     return super().form_valid(form)
+
+class SurveyDetail(DetailView):
+  model = Survey
+  template_name = 'surveys/detail.html'
+  context_object_name = 'survey'
+
+  def get_context_data(self, **kwargs):
+      print(self.kwargs)
+      return super().get_context_data(**kwargs)
