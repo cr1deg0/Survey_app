@@ -20,7 +20,7 @@
       <tbody>
         {% for survey in surveys %}
           <tr>
-            <th scope="row"><a href="{% url 'survey_detail' survey.pk %}">{{ survey.title }}</a></th>
+            <th scope="row"><a href="{{ survey.get_absolute_url }}">{{ survey.title }}</a></th>
             <td>{{ survey.creation_date }}</td>
             <td>{{ survey.status }}</td>
             <td>{{ survey.submissions }}</td>

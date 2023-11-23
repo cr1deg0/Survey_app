@@ -12,16 +12,15 @@ class QuestionInLine(admin.StackedInline):
   model = Question
   extra = 0
 
+@admin.register(Survey)
 class SurveyAdmin(admin.ModelAdmin):
   """ Display survey title and creation date in admin surveys summary. Display Survey and Questions 
   and together """
+  prepopulated_fields = {'slug': ('title',),}
   inlines = [QuestionInLine]
-  list_display = ['title', 'creation_date']
+  list_display = ['title', 'created']
 
+@admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
   """ Display Question and Options together """
   inlines = [OptionInLine]
-
-
-admin.site.register(Survey, SurveyAdmin)
-admin.site.register(Question, QuestionAdmin)
