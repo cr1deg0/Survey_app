@@ -1,14 +1,10 @@
 from django.views.generic import ListView, DetailView, UpdateView, CreateView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from surveys.forms import EditSurveyForm
 from surveys.models import Survey
 from guardian.mixins import PermissionRequiredMixin
+from django.urls import reverse_lazy
 
-# Create your views here.
-
-# class UserAccessMixin(LoginRequiredMixin, UserPassesTestMixin):
-#   def get_test_func(self):
-#     if not self.request.user == Survey.
-#     return super().get_test_func()
 
 class Home(TemplateView):
   """ Home page view """
@@ -25,18 +21,24 @@ class SurveyListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     return Survey.objects.filter(author=self.request.user)
 
 class SurveyDetail(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+  """ View the details of the survey responses """
   model = Survey
   template_name = 'surveys/detail.html'
   context_object_name = 'survey'
   permission_required='surveys.view_own_survey'
 
-  def get_context_data(self, **kwargs):
-    print(self.kwargs)
-    return super().get_context_data(**kwargs)
 
-class SurveyEdit(LoginRequiredMixin, UpdateView):
+class SurveyEdit(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+  """ Edit survey """
   model = Survey
+  form_class = EditSurveyForm
   template_name= 'surveys/edit.html'
+  permission_required='surveys.view_own_survey'
+  # success_url = reverse_lazy('survey_edit', args=[])
+
+  def get_success_url(self):
+    print(self.kwargs)
+    return reverse_lazy('survey_edit', args=[self.kwargs['slug']])
 
 class SurveyNew(LoginRequiredMixin, CreateView):
   model = Survey

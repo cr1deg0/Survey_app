@@ -1,14 +1,15 @@
-{% extends './base_authenticated.html' %}
-
-{% block content %}
+{% extends './base_authenticated.html' %} {% block content %}
 
 <main class="container">
-  <h1>{{ survey.title }}</h1>
+	<h1>{{ survey.title }}</h1>
 
-  <div class="d-flex justify-content-center">
-    <a href="{% url 'survey_list' %}" class="btn btn-primary btn-md px-4 me-sm-3 mt-4">Go to Dashboard</a>
-  </div>
-
+	<div class="d-flex justify-content-center">
+		<a
+			href="{% url 'survey_list' %}"
+			class="btn btn-primary btn-md px-4 me-sm-3 mt-4"
+			>Go to Dashboard</a
+		>
+	</div>
 </main>
 
 {% endblock %}
