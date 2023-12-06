@@ -24,9 +24,9 @@
             <td>{{ survey.creation_date }}</td>
             <td>{{ survey.status }}</td>
             <td>{{ survey.submissions }}</td>
-            <td>Publish</td>
-            <td>Edit</td>
-            <td>Delete</td>
+            <td><a href="" class="btn btn-outline-primary btn-sm" style="width: 80px;">Publish</a></td>
+            <td><a href="{% url 'survey_edit' survey.slug %}" class="btn btn-outline-primary btn-sm" style="width: 80px;">Edit</a></td>
+            <td><a href="" class="btn btn-outline-primary btn-sm" style="width: 80px;">Delete</a></td>
           </tr>
         {% endfor %}
       </tbody>
