@@ -20,6 +20,15 @@ class SurveyListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     # return super().get_queryset().filter(author=self.request.user)
     return Survey.objects.filter(author=self.request.user)
 
+class SurveyCreateView(LoginRequiredMixin, CreateView):
+  model = Survey
+  fields = ['title']
+  template_name = 'surveys/new.html'
+
+  def form_valid(self, form):
+    form.instance.author = self.request.user
+    return super().form_valid(form)
+
 class SurveyDetail(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
   """ View the details of the survey responses """
   model = Survey
@@ -29,23 +38,15 @@ class SurveyDetail(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
 
 
 class SurveyEdit(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
-  """ Edit survey """
+  """ Edit survey view. Can change survey title and status and add questions """
   model = Survey
   form_class = EditSurveyForm
   template_name= 'surveys/edit.html'
   permission_required='surveys.view_own_survey'
-  # success_url = reverse_lazy('survey_edit', args=[])
 
   def get_success_url(self):
     print(self.kwargs)
     return reverse_lazy('survey_edit', args=[self.kwargs['slug']])
 
-class SurveyNew(LoginRequiredMixin, CreateView):
-  model = Survey
-  fields = ['title']
-  template_name = 'surveys/new.html'
 
-  def form_valid(self, form):
-    form.instance.author = self.request.user
-    return super().form_valid(form)
 
