@@ -3,11 +3,11 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils.text import slugify
 
-# Create your models here.
-
 
 class Survey(models.Model):
-    """ Model of a Survey """
+    """ Model of a Survey. Default status at creation is DRAFT and slug is
+    added automatically. """
+
     STATUS = [
         ("DRAFT", "Draft"),
         ("ACTIVE", "Active"),
