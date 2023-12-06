@@ -1,41 +1,68 @@
-{% extends './base_authenticated.html' %}
+{% extends './base_authenticated.html' %} {% block content %}
 
-{% block content %}
-
-<main class="container vh-100 ">
-  <h1>Your surveys</h1>
-  {% if surveys %}
-    <table class="table mb-4">
-      <thead>
-        <tr>
-          <th scope="col">Survey</th>
-          <th scope="col">Created on</th>
-          <th scope="col">Status</th>
-          <th scope="col">Submissions</th>
-          <th scope="col"></th>
-          <th scope="col"></th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for survey in surveys %}
-          <tr>
-            <th scope="row"><a href="{{ survey.get_absolute_url }}">{{ survey.title }}</a></th>
-            <td>{{ survey.creation_date }}</td>
-            <td>{{ survey.status }}</td>
-            <td>{{ survey.submissions }}</td>
-            <td><a href="" class="btn btn-outline-primary btn-sm" style="width: 80px;">Publish</a></td>
-            <td><a href="{% url 'survey_edit' survey.slug %}" class="btn btn-outline-primary btn-sm" style="width: 80px;">Edit</a></td>
-            <td><a href="" class="btn btn-outline-primary btn-sm" style="width: 80px;">Delete</a></td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  {% else %} 
-    <p>You don't have any Survey</p>
-  {% endif %}
-  <span class="container d-flex justify-content-center">
-    <a href="{% url 'survey_new' %}" class="btn btn-primary btn-md px-4 me-sm-3">New Survey</a> 
-  </span>
+<main class="container vh-100">
+	<h1>Your surveys</h1>
+	{% if surveys %}
+	<table class="table mb-4">
+		<thead>
+			<tr>
+				<th scope="col">Survey</th>
+				<th scope="col">Created on</th>
+				<th scope="col">Status</th>
+				<th scope="col">Submissions</th>
+				<th scope="col"></th>
+				<th scope="col"></th>
+				<th scope="col"></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for survey in surveys %}
+			<tr>
+				<th scope="row">
+					<a href="{{ survey.get_absolute_url }}"
+						>{{ survey.title }}</a
+					>
+				</th>
+				<td>{{ survey.created }}</td>
+				<td>{{ survey.status }}</td>
+				<td>{{ survey.submissions }}</td>
+				<td>
+					<a
+						href=""
+						class="btn btn-outline-primary btn-sm"
+						style="width: 80px"
+						>Publish</a
+					>
+				</td>
+				<td>
+					<a
+						href="{% url 'survey_edit' survey.slug %}"
+						class="btn btn-outline-primary btn-sm"
+						style="width: 80px"
+						>Edit</a
+					>
+				</td>
+				<td>
+					<a
+						href=""
+						class="btn btn-outline-primary btn-sm"
+						style="width: 80px"
+						>Delete</a
+					>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{% else %}
+	<p>You don't have any Survey</p>
+	{% endif %}
+	<span class="container d-flex justify-content-center">
+		<a
+			href="{% url 'survey_new' %}"
+			class="btn btn-primary btn-md px-4 me-sm-3"
+			>New Survey</a
+		>
+	</span>
 </main>
 {% endblock %}
