@@ -1,3 +1,4 @@
+// Control for the Edit Survery form section
 surveyEditForm = document.getElementById("survey-edit-form");
 surveyEditFormControl = document.getElementById("control-survey-edit-form");
 
