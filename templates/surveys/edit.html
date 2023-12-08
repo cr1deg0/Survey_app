@@ -3,8 +3,8 @@
 {% block content %}
 
 <main class="container">
-	<h1>{{survey.title }}</h1>
-	<div class="border-bottom mb-2">
+	<h1 class="text-primary border border-primary rounded p-2">{{survey.title }}</h1>
+	<div class="border-bottom my-4">
 		<form method="POST">
 			{% csrf_token %}
 			{{ form.as_p }}
