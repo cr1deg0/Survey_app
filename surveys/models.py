@@ -27,7 +27,7 @@ class Survey(models.Model):
         return super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('survey_detail', args=[self.slug])
+        return reverse('survey_edit', args=[self.slug])
 
     def __str__(self):
         return self.title

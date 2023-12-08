@@ -1,0 +1,12 @@
+{% extends './base_authenticated.html' %} {% block content %}
+
+<main class="container">
+	<form method="post">
+    {% csrf_token %}
+    <h1>{{ survey.title }}</h1>
+    <p>Are you sure you want to delete this survey?</p>
+    <input type="submit" value="Confirm" class="btn btn-primary btn-md px-4 me-sm-3 mt-4">
+  </form>
+</main>
+
+{% endblock %}

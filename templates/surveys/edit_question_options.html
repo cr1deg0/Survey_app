@@ -1,0 +1,57 @@
+{% extends './base_authenticated.html' %} {% block content %}
+
+<main class="container">
+  <form action="" method="post" enctype="multipart/form-data">
+		{% for hidden_field in form.hidden_fields %} 
+			{{hidden_field.errors }} 
+			{{ hidden_field }} 
+		{% endfor %} 
+		{% csrf_token %} 
+		{{ form.management_form }} 
+		{{ form.non_form_errors }}
+
+		<h3>Update Options</h3>
+		{% for option_form in form.forms %}
+		<hr />
+		<h5>
+			{% if option_form.instance.id %} 
+				{{question_form.instance.title|title }} 
+			{% else %} 
+				{% if option.forms|length > 1 %} 
+					Add another option 
+				{% else %} 
+					Add an option
+				{% endif %} 
+			{% endif %}
+		</h5>
+		{% for hidden_field in question_form.hidden_fields %} 
+			{{ hidden_field.errors }} 
+		{% endfor %}
+		<table>
+			{{ option_form.as_table }}
+		</table>
+		{% endfor %}
+		<hr />
+		<div class="d-flex justify-content-center mt-3">
+			<button
+				type="submit"
+				value="Update collection"
+				class="btn btn-primary btn-md px-4 me-sm-3 mt-4"
+			>
+				Update Options
+			</button>
+			<a
+				href=""
+				role="button"
+				class="btn btn-secondary btn-md px-4 me-sm-3 mt-4"
+				>Cancel</a
+			>
+		</div>
+	</form>
+</main>
+
+
+
+</main>
+
+{% endblock %}
