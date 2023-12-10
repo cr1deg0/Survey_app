@@ -34,7 +34,10 @@ class Survey(models.Model):
 
     class Meta:
         ordering = ['-created']
-        permissions = (('view_own_survey', 'Can view own survey'),)
+        permissions = (
+            ('view_own_survey', 'Can view own survey'),
+            ('edit_own_survey', 'Can edit own survey'),
+            )
 
 
 class Question(models.Model):
@@ -44,6 +47,12 @@ class Question(models.Model):
 
     def __str__(self):
         return self.question
+
+    class Meta:
+        permissions = (
+            ('view_own_question', 'Can view own question'),
+            ('edit_own_question', 'Can edit own question'),
+        )
 
 
 class Option(models.Model):

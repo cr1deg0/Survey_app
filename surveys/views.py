@@ -40,29 +40,30 @@ class SurveyDetail(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
   context_object_name = 'survey'
   permission_required='surveys.view_own_survey'
 
-class SurveyDeleteView(DeleteView):
+class SurveyDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
   """ Deletes a Survey instance """
   model=Survey
   template_name='surveys/delete.html'
   content_object_name = 'survey'
   success_url = reverse_lazy('survey_list')
+  permission_required='surveys.view_survey'
 
 class SurveyEdit(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
   """ Edit survey view. Can change survey title and status and add questions """
   model = Survey
   form_class = EditSurveyForm
   template_name= 'surveys/edit.html'
-  permission_required='surveys.view_own_survey'
+  permission_required='surveys.edit_own_survey'
 
 
   def get_success_url(self):
-    print(self.kwargs)
     return reverse_lazy('survey_edit', args=[self.kwargs['slug']])
 
 
-class SurveyQuestionsEditView(SingleObjectMixin, FormView):
+class SurveyQuestionsEditView(LoginRequiredMixin, PermissionRequiredMixin, SingleObjectMixin, FormView):
   model = Survey
   template_name = 'surveys/edit_questions.html'
+  permission_required='surveys.edit_own_survey'
 
   def get(self, request, *args, **kwargs):
     """ Get the survey object associated with 'slug' argument in the 
@@ -78,7 +79,6 @@ class SurveyQuestionsEditView(SingleObjectMixin, FormView):
 
   def get_form(self, form_class=None):
     """ Return an instance of the formset to be used in this view. """
-    print(self.get_form_kwargs())
     return SurveyQuestionsFormset(**self.get_form_kwargs(), instance=self.object)
   
   def form_valid(self, form):
@@ -89,16 +89,15 @@ class SurveyQuestionsEditView(SingleObjectMixin, FormView):
     return reverse('survey_edit', kwargs = {'slug': self.object.slug })
 
 
-class QuestionOptionsEditView(SingleObjectMixin, FormView):
+class QuestionOptionsEditView(LoginRequiredMixin, PermissionRequiredMixin, SingleObjectMixin, FormView):
   model = Question
   template_name = 'surveys/edit_question_options.html'
+  permission_required='surveys.edit_own_question'
 
   def get(self, request, *args, **kwargs):
     """ Get the question object associated with 'pk' argument in the 
     http request GET URLConf. Assign the object to the new instance attribue self.object """
-    print(self.kwargs)
     self.object = self.get_object(queryset=Question.objects.all())
-    print(self.object)
     return super().get(request, *args, **kwargs)
 
   def post(self, request, *args, **kwargs ):
@@ -109,7 +108,6 @@ class QuestionOptionsEditView(SingleObjectMixin, FormView):
 
   def get_form(self, form_class=None):
     """ Return an instance of the formset to be used in this view. """
-    print(self.get_form_kwargs())
     return QuestionOptionsFormset(**self.get_form_kwargs(), instance=self.object)
 
   def form_valid(self, form):
@@ -118,4 +116,4 @@ class QuestionOptionsEditView(SingleObjectMixin, FormView):
 
   def get_success_url(self):
     return reverse('survey_list')
-    # return reverse('survey_edit', kwargs = {'slug': self.kwargs[] })
+    # TO DO: return reverse('survey_edit', kwargs = {'slug': self.kwargs[] })
