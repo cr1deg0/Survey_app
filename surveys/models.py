@@ -37,6 +37,7 @@ class Survey(models.Model):
         permissions = (
             ('view_own_survey', 'Can view own survey'),
             ('edit_own_survey', 'Can edit own survey'),
+            ('delete_own_survey', 'Can delete own survey'),
             )
 
 
@@ -53,7 +54,6 @@ class Question(models.Model):
             ('view_own_question', 'Can view own question'),
             ('edit_own_question', 'Can edit own question'),
         )
-
 
 class Option(models.Model):
     question = models.ForeignKey(

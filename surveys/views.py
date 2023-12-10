@@ -21,7 +21,6 @@ class SurveyListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
   permission_required='surveys.view_survey'
 
   def get_queryset(self):
-    # return super().get_queryset().filter(author=self.request.user)
     return Survey.objects.filter(author=self.request.user)
 
 class SurveyCreateView(LoginRequiredMixin, CreateView):
@@ -46,7 +45,7 @@ class SurveyDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
   template_name='surveys/delete.html'
   content_object_name = 'survey'
   success_url = reverse_lazy('survey_list')
-  permission_required='surveys.view_survey'
+  permission_required='surveys.delete_own_survey'
 
 class SurveyEdit(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
   """ Edit survey view. Can change survey title and status and add questions """

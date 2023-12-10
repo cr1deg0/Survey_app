@@ -20,6 +20,11 @@ def set_survey_permission(sender, instance, created, **kwargs):
             instance.author,
             instance
         )
+        assign_perm(
+            "delete_own_survey",
+            instance.author,
+            instance
+        )
 
 @receiver(post_save, sender=Question)
 def set_question_permission(sender, instance, created, **kwargs):
