@@ -54,6 +54,8 @@ class Question(models.Model):
             ('view_own_question', 'Can view own question'),
             ('edit_own_question', 'Can edit own question'),
         )
+    def get_absolute_url(self):
+        return reverse("survey_edit", kwargs={"slug": self.survey.slug})
 
 class Option(models.Model):
     question = models.ForeignKey(
@@ -63,3 +65,7 @@ class Option(models.Model):
 
     def __str__(self):
         return self.option
+
+    def get_absolute_url(self):
+        return reverse("survey_edit", kwargs={"slug": self.question.survey.slug})
+    

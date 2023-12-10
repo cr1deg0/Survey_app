@@ -1,6 +1,7 @@
 {% extends './base_authenticated.html' %} {% block content %}
 
 <main class="container">
+	<h1 class="text-primary">Update Questions</h1>
 	<form action="" method="post" enctype="multipart/form-data">
 		{% for hidden_field in form.hidden_fields %} 
 			{{hidden_field.errors }} 
@@ -10,26 +11,12 @@
 		{{ form.management_form }} 
 		{{ form.non_form_errors }}
 
-		<h3>Update Questions</h3>
 		{% for question_form in form.forms %}
 		<hr />
-		<h5>
-			{% if question_form.instance.id %} 
-				{{question_form.instance.title|title }} 
-			{% else %} 
-				{% if question.forms|length > 1 %} 
-					Add another question 
-				{% else %} 
-					Add a question 
-				{% endif %} 
-			{% endif %}
-		</h5>
 		{% for hidden_field in question_form.hidden_fields %} 
 			{{ hidden_field.errors }} 
 		{% endfor %}
-		<table>
-			{{ question_form.as_table }}
-		</table>
+			{{ question_form.as_p }}
 		{% endfor %}
 		<hr />
 		<div class="d-flex justify-content-center mt-3">

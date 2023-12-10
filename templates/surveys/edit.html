@@ -17,6 +17,7 @@
 	</div>
 	<div>
 		<h3>Questions</h3>
+		{% if survey.question_survey.all|length > 0 %}
 		<ol class="list-group list-group-numbered">
 			{% for question in survey.question_survey.all %}
 				<li class="list-group-item d-flex justify-content-between align-items-start">
@@ -30,16 +31,19 @@
 							{% endfor %}
 						</ul>
 					</div>
-					<a href="{% url 'options_edit' slug=survey.slug pk=question.id %}" class="btn btn-outline-primary btn-sm px-2 mb-4">Add or Edit Options</a>
+					<a href="{% url 'options_edit' slug=survey.slug pk=question.id %}" class="btn btn-outline-primary btn-sm px-2 mb-4">Edit Question Options</a>
 				</li>
 			{% endfor %}
 		</ol>
+		{% else %}
+			<p>There are no questions in this survey yest. Press <b>Edit Questions</b> to add questions.</p>
+		{% endif %}
 	</div>
 	<div class="d-flex justify-content-center mt-3">
 		<a
 			href="{% url 'questions_edit' slug=survey.slug %}"
 			class="btn btn-primary btn-md px-4 me-sm-3 mt-4"
-			>Add or Edit Questions</a
+			>Edit Questions</a
 		>
 		<a
 			href="{% url 'survey_list' %}"

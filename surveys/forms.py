@@ -16,8 +16,17 @@ class EditSurveyForm(forms.ModelForm):
 
 # Define the models the inline form is working with
 SurveyQuestionsFormset = inlineformset_factory(
-     Survey, Question, fields=('question',), extra=1)
+     Survey, 
+     Question, 
+     fields=('question',), 
+     extra=3,
+     widgets={'question': forms.TextInput(attrs={'class': 'form-control'})},
+)
 
 QuestionOptionsFormset = inlineformset_factory(
-    Question, Option, fields=('option',), extra=2
+    Question, 
+    Option, 
+    fields=('option',), 
+    extra=3,
+    widgets={'option': forms.TextInput(attrs={'class': 'form-control'})},
 )
