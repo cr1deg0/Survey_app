@@ -1,7 +1,7 @@
 {% extends './base_authenticated.html' %} {% block content %}
 
 <main class="container vh-100">
-	<h1>Your surveys</h1>
+	<h1 class="text-primary mb-4">Your Surveys</h1>
 	{% if surveys %}
 	<table class="table mb-4">
 		<thead>
@@ -44,7 +44,7 @@
 				</td>
 				<td>
 					<a
-						href=""
+						href="{% url 'survey_share' slug=survey.slug %}"
 						class="btn btn-outline-primary btn-sm"
 						style="width: 80px"
 						>Share</a
@@ -55,7 +55,7 @@
 		</tbody>
 	</table>
 	{% else %}
-	<p>You don't have any Survey</p>
+	<p class="ms-2 mb-4">You don't have any surveys yet, create the first one!</p>
 	{% endif %}
 	<span class="container d-flex justify-content-center">
 		<a
