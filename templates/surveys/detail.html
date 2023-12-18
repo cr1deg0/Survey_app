@@ -1,8 +1,26 @@
 {% extends './base_authenticated.html' %} {% block content %}
 
 <main class="container">
-	<h1>{{ survey.title }}</h1>
-
+	<h1 class="text-primary mb-4">{{ survey.title }} - {{ survey.submissions}} submissions</h1>
+	{% if survey.status == 'DRAFT' %}
+		<p>This survey has not been published yet.</p>
+	{% else %}
+		{% for question in survey.question_survey.all %}
+			<div class="mb-4">
+				<h2 class="fs-5 mb-4">Question {{ forloop.counter }} - {{question.question}}</h2>
+				<ol class="list-group list-group-numbered">
+					{% for option in question.option_question.all %}
+						<li class="list-group-item d-flex align-items-center"> {{ option.option }} 
+							<span class="material-symbols-outlined mx-4">
+								more_horiz
+							</span> 
+							{% widthratio option.selected survey.submissions 100%}%
+						</li>
+					{% endfor %}
+				</ol>
+			</div>
+		{% endfor %}
+	{% endif %}
 	<div class="d-flex justify-content-center">
 		<a
 			href="{% url 'survey_list' %}"
@@ -11,5 +29,4 @@
 		>
 	</div>
 </main>
-
 {% endblock %}

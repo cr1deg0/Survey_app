@@ -19,7 +19,7 @@
 			{% for survey in surveys %}
 			<tr>
 				<th scope="row">
-					<a href="{{ survey.get_absolute_url }}"
+					<a href="{% url 'survey_detail' slug=survey.slug %}"
 						>{{ survey.title }}</a
 					>
 				</th>
