@@ -6,8 +6,8 @@ from surveys.models import Survey, Question, User
 
 @receiver(post_save, sender=Survey)
 def set_survey_permission(sender, instance, created, **kwargs):
-    """ Add view and change survey permissions to the author on instance creation """
-    print(f'{instance} created {created}')
+    """ Add specific survey view, update and delete permissions to the author on survey instance creation """
+
     if created:
         assign_perm(
             "view_own_survey",
@@ -27,11 +27,8 @@ def set_survey_permission(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=Question)
 def set_question_permission(sender, instance, created, **kwargs):
-    """ Add change question permission to the author on instance creation """
-    print(f'{instance} created {created}')
-    print(instance.__dict__)
+    """ Add specific question view, change and delete permission to the author on question instance creation """
     author = User.objects.get(survey_author__question_survey__id=instance.id)
-    print(author)
     if created:
         assign_perm(
             "view_own_question",
@@ -40,6 +37,11 @@ def set_question_permission(sender, instance, created, **kwargs):
         )
         assign_perm(
             "edit_own_question",
+            author,
+            instance
+        )
+        assign_perm(
+            "delete_own_question",
             author,
             instance
         )

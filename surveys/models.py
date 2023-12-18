@@ -53,6 +53,7 @@ class Question(models.Model):
         permissions = (
             ('view_own_question', 'Can view own question'),
             ('edit_own_question', 'Can edit own question'),
+            ('delete_own_question', 'Can delete own question'),
         )
     def get_absolute_url(self):
         return reverse("survey_edit", kwargs={"slug": self.survey.slug})
