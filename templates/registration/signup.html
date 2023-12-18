@@ -1,0 +1,27 @@
+{% extends '../base.html' %}
+
+{% block content %}
+  <main class="d-flex align-items-center py-4 vh-100">
+      <div class="m-auto">
+        <h1 class="h3 mb-4 fw-normal text-primary">Sign up for an account</h1>
+        <form method="post" novalidate> 
+          {% csrf_token %}
+          {% for field in  form %}
+            <div class="d-flex flex-column mb-3">
+              <span class="me-1">{{field.label_tag}}</span>
+              {{field}}
+              <span class="form-text">{{ field.help_text }}</span>
+              {% if field.errors %}
+                <ul class="list-group" style="list-style-type: none;">
+                  {% for error in  field.errors%}
+                    <li><span class="text-danger">{{ error }}</span></li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </div>
+          {% endfor %}
+          <button type="submit" class="btn btn-primary w-100 py-2">Sign up</button>
+        </form>
+      </div>
+  </main>
+{% endblock %}
