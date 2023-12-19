@@ -9,7 +9,7 @@ urlpatterns = [
     path('', Home.as_view(), name='home'),
     path('my_surveys/', SurveyListView.as_view(), name='survey_list'),
     path('my_surveys/new/', SurveyCreateView.as_view(), name='survey_add'),
-    path('my_surveys/<slug:slug>/', SurveyDetail.as_view(), name='survey_detail'),
+    path('my_surveys/<slug:slug>/results', SurveyDetail.as_view(), name='survey_detail'),
     path('my_surveys/<slug:slug>/delete', SurveyDeleteView.as_view(), name='survey_delete'),
     path('my_surveys/<slug:slug>/edit/',
          SurveyEdit.as_view(), name='survey_edit'),
