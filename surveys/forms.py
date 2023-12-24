@@ -7,7 +7,6 @@ class EditSurveyForm(forms.ModelForm):
     class Meta:
         model = Survey
         fields = ('title', 'status')
-
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'status': forms.RadioSelect()
@@ -30,3 +29,17 @@ QuestionOptionsFormset = inlineformset_factory(
     extra=3,
     widgets={'option': forms.TextInput(attrs={'class': 'form-control'})},
 )
+
+class AnswerForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        options = kwargs.pop('options')
+        super().__init__(*args, **kwargs)
+        choices = {(option.pk, option.option) for option in options}
+        options_choices = forms.ChoiceField(choices=choices, widget=forms.RadioSelect(attrs={'class': 'form-check-input'}), required=True)
+        self.fields['options'] = options_choices
+
+class BaseAnswerFormSet(forms.BaseFormSet):
+    def get_form_kwargs(self, index):
+        kwargs = super().get_form_kwargs(index)
+        kwargs["options"] = kwargs["options"][index]
+        return kwargs

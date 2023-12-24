@@ -1,0 +1,31 @@
+{% extends '../base.html' %}
+
+{% block content %}
+  <main class="container my-4">
+    {% if survey.status == 'ACTIVE' %}
+      <h1 class="text-primary mb-4">{{ survey.title }}</h1>
+        <form method='post' action="" novalidate>
+          {{formset.management_form}}
+          {% csrf_token %}
+          {% for question, form in titled_formset %}
+            <fieldset class="mb-4">
+              <legend>Q{{ forloop.counter }} - {{ question }}</legend>
+              {% for radio in form.options %}
+                <div class="form-check form-check-inline">
+                    {{ radio }}
+                </div>
+              {% endfor %}
+                <ul style="list-style-type:none; padding-left: 0;">
+                {% for error in form.options.errors %}
+                  <li class="text-danger">{{ error }}</li>
+                {% endfor %}
+                </ul>
+            </fieldset>
+          {% endfor %}
+          <input type='submit' value="Send" class="btn btn-primary btn-md px-4 me-sm-3"/>
+        </form>
+      {% else %}
+        <p>The survey must be published first</p>
+      {% endif %}
+  </main>
+{% endblock %}

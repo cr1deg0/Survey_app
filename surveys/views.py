@@ -2,12 +2,13 @@ from django.views.generic import (ListView, DetailView, UpdateView,
 CreateView, TemplateView, FormView, DeleteView)
 from django.views.generic.detail import SingleObjectMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
-from surveys.forms import EditSurveyForm
-from surveys.models import Question, Survey
+from surveys.forms import (EditSurveyForm, SurveyQuestionsFormset, QuestionOptionsFormset, AnswerForm, BaseAnswerFormSet)
+from surveys.models import Question, Survey, Option
 from guardian.mixins import PermissionRequiredMixin
 from django.urls import reverse_lazy, reverse
-from django.shortcuts import HttpResponseRedirect
-from .forms import SurveyQuestionsFormset, QuestionOptionsFormset
+from django.shortcuts import HttpResponseRedirect, get_object_or_404, render
+from django.forms import formset_factory
+from django.db import transaction
 
 
 class Home(TemplateView):
@@ -112,3 +113,41 @@ class QuestionOptionsEditView(LoginRequiredMixin, PermissionRequiredMixin, Singl
   
   def get_success_url(self):
     return reverse('survey_edit', kwargs = {'slug': self.object.survey.slug })
+
+
+def survey_answer_view(request, slug):
+
+  survey = get_object_or_404(Survey, slug=slug)
+  questions = survey.question_survey.all()
+  options = [question.option_question.all() for question in questions]
+
+  AnswerFormSet = formset_factory(AnswerForm, formset=BaseAnswerFormSet, extra=len(questions))
+  form_kwargs = {"empty_permitted": False, 'options': options}
+
+  if request.method == 'POST':
+    formset = AnswerFormSet(request.POST, form_kwargs=form_kwargs)
+    if formset.is_valid():
+      answers = formset.cleaned_data
+      with transaction.atomic():
+        for answer in answers:
+          selected_option = int(answer["options"])
+          option_obj = Option.objects.get(id=selected_option)
+          option_obj.selected += 1
+          option_obj.save()
+        survey.submissions += 1
+        survey.save()
+      return HttpResponseRedirect(reverse('thank_you'))
+  else:
+    formset = AnswerFormSet(form_kwargs=form_kwargs)
+
+  titled_formset = zip(questions, formset)
+  return render(
+    request, 
+    'surveys/answer.html',
+    { "survey": survey,
+      "formset": formset,
+      "titled_formset": titled_formset,})
+
+
+class ThankYouView(TemplateView):
+  template_name='surveys/thank_you.html'
