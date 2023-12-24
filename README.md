@@ -1,6 +1,7 @@
 # Survey app
 A survey app created with Django. In this website users can create surveys and get the results of the answers.
 
+
 Users can:
 
 - Signup to the website
