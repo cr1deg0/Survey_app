@@ -10,7 +10,7 @@ class Survey(models.Model):
 
     STATUS = [
         ("DRAFT", "Draft"),
-        ("ACTIVE", "Active"),
+        ("ACTIVE", "Publish"),
     ]
     title = models.CharField(max_length=250, unique=True)
     author = models.ForeignKey(
