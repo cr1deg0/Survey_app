@@ -1,13 +1,13 @@
 # Survey app
-A survey app created with Django. In this website users can create surveys and get the results of the answers.
+A survey app created with Django. In this website users can create surveys and get insights from the answers.
 
 ![App overview](https://github.com/cr1deg0/survey_app/assets/86016298/576220b9-67b2-4887-9327-27af05ceff30)
 
 Users can:
 
-- Signup to the website
+- Sign up/ Sign in to the website
 - Create their own surveys adding as many questions and answers as required
-- Share the link to the survey (under development)
+- Generate a page with the survey and share the link to the survey
 - Analyse surveys results. See what percentage of people answered each question
 
 # App design
@@ -26,6 +26,13 @@ Customer journey and high level app design.
 
 - Add graphs to survey result View
 - Make question and option addition more dynamic with javascript
+
+# Learnings
+
+- Creating a high level design of the app, user journey and database model as a first step helped me to have a clear plan and coding sequence, reducing refactorings.
+- Using class based views.
+- Use of Django Guardian for object level permission
+- Use of formsets and inline formsets.
 
 # Acknowledgments
 
