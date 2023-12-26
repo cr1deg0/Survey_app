@@ -30,16 +30,20 @@ QuestionOptionsFormset = inlineformset_factory(
     widgets={'option': forms.TextInput(attrs={'class': 'form-control'})},
 )
 
+
 class AnswerForm(forms.Form):
-    def __init__(self, *args, **kwargs):
-        options = kwargs.pop('options')
+    def __init__(self, *args, options, **kwargs):
+        self.options = options
         super().__init__(*args, **kwargs)
-        choices = {(option.pk, option.option) for option in options}
-        options_choices = forms.ChoiceField(choices=choices, widget=forms.RadioSelect(attrs={'class': 'form-check-input'}), required=True)
-        self.fields['options'] = options_choices
+        choices = {(option.pk, option.option) for option in self.options}
+        options_field = forms.ChoiceField(
+            choices = choices, 
+            widget = forms.RadioSelect(attrs={'class': 'form-check-input'}), required = True)
+        self.fields['options'] = options_field
+
 
 class BaseAnswerFormSet(forms.BaseFormSet):
     def get_form_kwargs(self, index):
         kwargs = super().get_form_kwargs(index)
-        kwargs["options"] = kwargs["options"][index]
+        kwargs['options'] = kwargs['options'][index]
         return kwargs
