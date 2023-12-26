@@ -27,3 +27,6 @@ Customer journey and high level app design.
 - Add graphs to survey result View
 - Make question and option addition more dynamic with javascript
 
+# Acknowledgments
+
+This idea to create this app comes from Matt Segal's [blogpost](https://mattsegal.dev/django-survey-project.html).
