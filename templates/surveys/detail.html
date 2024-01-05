@@ -1,38 +1,43 @@
 {% extends './base_authenticated.html' %} {% block content %}
 
 <main class="container">
-	<h1 class="text-primary mb-4">
-		{{ survey.title }} - {{ survey.submissions}} submissions
-	</h1>
+	<div class="d-flex justify-content-between align-items-center">
+		<h1 class="text-primary mb-4">{{ survey.title }}</h1>
+		<span class="fs-3 text-primary"
+			>{{ survey.submissions}} submissions</span
+		>
+	</div>
 	{% if survey.status == 'DRAFT' %}
 	<p>This survey has not been published yet.</p>
 	{% else %} {% for question in survey.question_survey.all %}
-	<div class="mb-4">
-		<h2 class="fs-5 mb-4">
+	<div>
+		<h2 class="fs-5">
 			Question {{ forloop.counter }} - {{question.question}}
 		</h2>
-		<div class="col-6">
-			<ol class="list-group list-group-numbered">
-				{% for option in question.option_question.all %}
-				<li class="list-group-item d-flex align-items-center">
-					{{ option.option }}
-					<span class="material-symbols-outlined mx-4">
-						more_horiz
-					</span>
-					{% widthratio option.selected survey.submissions 100%}%
-				</li>
-				{% endfor %}
-			</ol>
-		</div>
-		<div class="col-6">
-			<canvas id="graph-{{forloop.counter}}"></canvas>
+		<div class="d-flex justify-content-between align-items-center">
+			<div class="col-6">
+				<ol class="list-group list-group-numbered">
+					{% for option in question.option_question.all %}
+					<li class="list-group-item d-flex align-items-center">
+						&nbsp; {{ option.option }}
+						<span class="material-symbols-outlined mx-4">
+							more_horiz
+						</span>
+						{% widthratio option.selected survey.submissions 100%}%
+					</li>
+					{% endfor %}
+				</ol>
+			</div>
+			<div style="max-width: 300px">
+				<canvas id="graph-{{forloop.counter}}"></canvas>
+			</div>
 		</div>
 	</div>
 	{% endfor %} {{ results|json_script:"graph-data" }} {% endif %}
 	<div class="d-flex justify-content-center">
 		<a
 			href="{% url 'survey_list' %}"
-			class="btn btn-primary btn-md px-4 me-sm-3 mt-4"
+			class="btn btn-primary btn-md px-4 me-sm-3 my-4"
 			>Go to Dashboard</a
 		>
 	</div>
